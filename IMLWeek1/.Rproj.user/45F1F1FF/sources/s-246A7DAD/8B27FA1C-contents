@@ -1,0 +1,135 @@
+Task 1 b) (pen and paper)
+
+*(b) (2 points) The Hoeffding bounds are typically quite conservative: the obtained confidence intervals are
+actually so wide that they contain the true value with too high confidence (higher than 1−α probability).
+To see that this is indeed the case, simulate the 10000 repetitions of the experiment by drawing binomial
+outcomes (which correspond to the number of 1’s in n i.i.d. Bernoulli r.v.s) using rbinom(10000, n, p)
+with parameter values p = 0.5, 0.9, 0.99, and checking how many times the outcome is within the interval
+you calculated in the previous item.
+The theory says that with α = 0.05, for example, the outcome should be inside the interval at least 95%
+of the time. Repeat again with n = 10, 100, 1000.*
+
+
+```{r}
+print("Parameter values: n = 10, p = 0.5")
+n <- 10
+p <- 0.5
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 10, p = 0.9")
+n <- 10
+p <- 0.9
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 10, p = 0.99")
+n <- 10
+p <- 0.99
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 100, p = 0.5")
+n <- 100
+p <- 0.5
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 100, p = 0.9")
+n <- 100
+p <- 0.9
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 100, p = 0.99")
+n <- 100
+p <- 0.99
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 1000, p = 0.5")
+n <- 1000
+p <- 0.5
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 1000, p = 0.9")
+n <- 1000
+p <- 0.9
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+print("Parameter values: n = 1000, p = 0.99")
+n <- 1000
+p <- 0.99
+eps <- sqrt(log(40)/(2*n))
+a <- rbinom(10000,n,p)
+#(a < (n*(p+eps)))& (a > (n*(p-eps)))
+s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+message("Pct of cases that fit in the interval: ", s*100)
+
+```
+(d) (2 points) Again check whether the obtained bounds hold by simulating 10000 repetitions of the process:
+In each experiment, draw k binomial values from Bin(n, p) and check whether all of them are within the
+interval you calculated in the previous item.
+k gets values 1, 10 and 100, n gets values 10, 100 and 1000
+
+#Had to give up here
+
+    print("With parameter value k = 1 the case is the same as previous, so no need to duplicate")
+    print("Parameter values: k = 10, n = 10, p = 0.5")
+    #a <- matrix(1:5000, nrow=100)
+    #a <- cbind(a,apply(a[,1:10],1,mean))
+    k <- 100
+    n <- c(10,100)
+    p <- c(0.5,0.9,0.99)
+    
+    eps <- sqrt(log(40*k)/(2*n))
+    for (nr in n)
+    {
+      for (pr in p)
+      {
+        #matrix where to collect all 100 draws from 10000 simulations
+        a <- matrix(0,nrow = 100, ncol = 10000)
+    
+        for (i in 1 : 100)
+        {
+          a[i,] = rbinom(10000,nr,pr)
+        }
+        k <- 1
+        eps <- sqrt(log(40*k)/(2*n))
+        s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+        message("Pct of cases that all K = 1 fit in the interval: ", s*100)
+      }
+    }
+    a <- rbinom(10000,n,p)
+    #(a < (n*(p+eps)))& (a > (n*(p-eps)))
+    s <- sum((a < (n*(p+eps)))& (a > (n*(p-eps))))/10000
+    message("Pct of cases that fit in the interval: ", s*100)
+    alpha <- 0.05
+    k <- 10
+

@@ -1,0 +1,10 @@
+"0","```r
+x <- cars$speed
+y<- cars$dist
+model = lm(y~x)
+min_s = min(cars$speed)
+max_s = max(cars$speed)
+lines(min_s:max:s,i + k *(min_s:max_s), col=\"red\")
+```"
+"1","Error in min_s:max : NA/NaN argument
+"
