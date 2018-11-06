@@ -55,6 +55,10 @@ A[,1:10].
 ```{r}
 prs <- pairs(college[,1:10])
 ```
+
+iii. Use the plot() function to produce side-by-side boxplots of
+Outstate versus Private.
+
 ```{r}
 boxplot(Outstate~Private,college)
 ```

@@ -275,7 +275,7 @@ y = myPoly(x)+errors
 folds <- cut(seq(1,length(x)),breaks=10,labels=FALSE)
 
 #cross validation mse, create vector of zeros
-(mse_cv = numeric(10)) #one for each value of K
+mse_cv = numeric(10) #one for each value of K
 for (K in 1:10)
 {
   #for each subset of data
