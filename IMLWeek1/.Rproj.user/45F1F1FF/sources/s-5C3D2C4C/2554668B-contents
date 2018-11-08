@@ -242,15 +242,28 @@ buildModel:
 buildModel <- function(dgr)
 {
   modStr = ""
-  txt = "x"
-  for (i in 2:dgr)
+  txt = "1"
+  if(dgr > 0)
   {
-    txt = paste(txt, " + I(x^", i, ")", sep="")
+    txt = "1 + x"
+  }
+  if(dgr > 1)
+  {
+    for (i in 2:dgr)
+    {
+      txt = paste(txt, " + I(x^", i, ")", sep="")
+    }
+
   }
   return(txt)
   #x + I(x^2)+ I(x^3) + I(x^4) + I(x^5) + I(x^6) + I(x^7) + I(x^8) + I(x^9) + I(x^10)
 }
 ```
+
+```{r}
+buildModel(0)
+```
+
 
 myModel: 
 ```{r}
@@ -275,8 +288,8 @@ y = myPoly(x)+errors
 folds <- cut(seq(1,length(x)),breaks=10,labels=FALSE)
 
 #cross validation mse, create vector of zeros
-mse_cv = numeric(10) #one for each value of K
-for (K in 1:10)
+mse_cv = numeric(11) #one for each value of K
+for (K in 0:10)
 {
   #for each subset of data
   for (set in 1:10)
@@ -292,9 +305,13 @@ for (K in 1:10)
     #predict with model
     y_s_cv = pred(mod,x_s_test)
     #calculate the MSE for the validation data and add to sum for this K
-    mse_cv[K] = mse_cv[K] + MSE(y_s_test,y_s_cv)
+    mse_cv[K+1] = mse_cv[K+1] + MSE(y_s_test,y_s_cv)
   }
 }
-plot(1:10,mse_cv,xlab = "K", ylab = "Sum of mse", main = "MSE sum over 10-fold cross-validation")
+plot(0:10,mse_cv,xlab = "K",  ylab = "Sum of mse", main = "MSE sum over 10-fold cross-validation")
+```
+
+```{r}
+mse_cv[2]
 ```
 
