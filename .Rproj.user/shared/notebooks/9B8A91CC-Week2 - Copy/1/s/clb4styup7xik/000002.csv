@@ -1,0 +1,4 @@
+"0","f1 <- density1"
+"0","f2 <- density2"
+"0","lindist = 0.5*f1/(0.5*f1 + 0.5*f2)"
+"0","image(xgrid, ygrid, lindist)"

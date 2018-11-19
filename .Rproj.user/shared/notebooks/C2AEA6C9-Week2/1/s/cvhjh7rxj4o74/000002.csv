@@ -1,0 +1,6 @@
+"0","library(MASS)"
+"0","corr = c(2.0, -0.75*sqrt(6), -0.75*sqrt(6), 3.0)"
+"0","sigma <- matrix(corr,nrow=2, ncol=2)"
+"0","sample <- mvrnorm(200,c(0,0), Sigma = sigma)"
+"0","x = sample [,1]"
+"0","y = sample [,2]"

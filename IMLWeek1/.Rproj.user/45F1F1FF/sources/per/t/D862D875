@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541497427330.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2292182453",
+    "id" : "D862D875",
+    "lastKnownWriteTime" : 1541674690,
+    "last_content_update" : 1541674690527,
+    "path" : "C:/Users/antti/asalo/Opinnot/Intro to Machine Learning/IntroToML/index.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "22,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
