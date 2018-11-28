@@ -1,0 +1,5 @@
+"0","testsetY <- function(n)"
+"0","{"
+"0","  Ysmp = sample(0:2, size=n, replace=TRUE, prob=py)"
+"0","  return (Ysmp)"
+"0","}"

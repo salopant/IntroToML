@@ -1,0 +1,71 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+
+#### Problem 1 (3 + 3 + 4 + 2)
+
+#### (a) 
+
+(3 points) Consider a binary classication problem with $Y\in\{-1,+1\}$ and two real-valued features, 
+$X_1,X_2\in \mathbb{R}$. Suppose that we have learned a (Gaussian) naive Bayes classifier and obtained parameter estimates $\hat{\mu}_{-,j}= 0, \hat{\sigma}^{2}_{-,j}=1$ and $\hat{\mu}_{+,j}= 0, \hat{\sigma}^{2}_{-,j}=16$ for $j\in\{1,2\}$. Further, we use a uniform class prior $\hat{p}(y)=1/2$ for $y\in\{-1,+1\}$. 
+Use the Bayes formula to compute the posterior probability
+$$
+P(Y = +1 | X_1 = 1,X_2 = 2)
+$$
+
+#### Answer:
+Bayes formula:
+$$
+P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+$$
+$$
+P(Y = +1 | X_1 ,X_2) \\ \\
+= \frac{P(Y = +1 )P(X_1,X_2|Y = +1 )}{P(X_1,X_2)} \\
+= \frac{P(Y = +1 )P(X_1|Y = +1 )P(X_2|Y = +1 )}{P(X_1,X_2)} (Naive \  Bayes)\\
+$$
+
+Further calculation on paper lead to
+
+$$
+P(Y = +1 | X_1 ,X_2) = \frac{e^{\frac{-(x_1^2 + x_2^2)}{32}}}{e^{-\frac{-(x_1^2 + x_2^2)}{32}}+e^{\frac{-(x_1^2 + x_2^2)}{2}}}\\ \\
+$$
+Define this as R function probYplus1(x1,x2):
+```{r}
+probYplus1 <- function(x1,x2)
+{
+  px1 = 1/16*exp(-(x1^2+x2^2)/32)
+  px2 = exp(-(x1^2+x2^2)/2)
+  return(px1/(px1+px2))
+}
+probYminus1 <- function(x1,x2)
+{
+  px1 = 1/16*exp(-(x1^2+x2^2)/32)
+  px2 = exp(-(x1^2+x2^2)/2)
+  return(px2/(px1+px2))
+}
+```
+
+```{r}
+probYplus1(1,2)
+probYminus1(1,2)
+```
+$$
+P(Y = +1 | X_1=1 ,X_2=2) = \frac{e^{\frac{-(1 + 2)}{32}}}{e^{-\frac{-(1 + 2)}{32}}+e^{\frac{-(1 + 2)}{2}}} = 0.3944\\ 
+$$
+## (b) 
+(3 points) Visualize the class posterior $P(Y = +1 | x)$, where $x = (x1, x2) contains the observed feature values on a suitable grid of points.
+Hint: This is quite similar to Exercise 2.1.
+```{r}
+#create grid 
+xgrid <- .25*(-20:20)
+ygrid <- .25*(-20:20)
+grid <- expand.grid(xgrid, ygrid)
+py = probYplus1(grid[,1],grid[,2])
+pyDraw <- matrix(py, nrow=41, ncol=41)
+
+contour(xgrid, ygrid, pyDraw, xlab="x1", ylab="x2")
+image(xgrid, ygrid, pyDraw, xlab="x1", ylab="x2")
+persp(xgrid, ygrid, pyDraw, zlab="Probability y = +1", xlab="x1", ylab="x2",phi = 35, theta = 10)
+```

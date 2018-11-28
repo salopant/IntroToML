@@ -1,0 +1,50 @@
+"0","#D total points left in to be split area"
+"0","D <- D2 "
+"0","#QD impurity of the current total area"
+"0","QD <- D - sum(c(25,10,31,5,9,14))"
+"0","#D1 number of points in area 1"
+"0","D1 <- sum(c(10,31,14))"
+"0","#total number of points in max class in area 1"
+"0","D1max <- 31+10"
+"0","#D2 number of points in area 2"
+"0","D2 <- D - D1"
+"0","#D2max total number of points in max class in area 2"
+"0","D2max <- sum(c(25,14,9,5))"
+"0","#QD1 Purity of area 1"
+"0","QD1 <- D1 - D1max"
+"0","#QD2 Purity of area 2"
+"0","QD2 <- D2 - D2max"
+"0","#Impurity of split:"
+"0","QD1D2 <- D1/D*QD1 + D2/D*QD2"
+"0","#Gain of split:"
+"0","Gain <- QD - QD1D2"
+"0","message(""Result split 2:"")"
+"2","Result split 2:
+"
+"0","message(paste(""D ="",D))"
+"2","D = 131
+"
+"0","message(paste(""D1 ="",D1))"
+"2","D1 = 55
+"
+"0","message(paste(""D1max ="",D1max))"
+"2","D1max = 41
+"
+"0","message(paste(""D2 ="",D2))"
+"2","D2 = 76
+"
+"0","message(paste(""D2max ="",D2max))"
+"2","D2max = 53
+"
+"0","message(paste(""QD1 ="",QD1))"
+"2","QD1 = 14
+"
+"0","message(paste(""QD2 ="",QD2))"
+"2","QD2 = 23
+"
+"0","message(paste(""Impurity of split, QD1D2 ="",QD1D2))"
+"2","Impurity of split, QD1D2 = 19.2213740458015
+"
+"0","message(paste(""Gain of split ="",Gain))"
+"2","Gain of split = 17.7786259541985
+"

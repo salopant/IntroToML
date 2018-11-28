@@ -1,0 +1,1 @@
+"0","legend(1,0.2,legend = c(""Classification error"", ""Entropy"", ""Gini""), col = cl[1:3],lty=1:2, cex=0.8)"

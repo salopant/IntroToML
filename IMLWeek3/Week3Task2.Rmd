@@ -1,0 +1,287 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+
+#### Problem 2 (2 + 2 + 2 + 2)
+
+First define the distributions for Y and X|Y:
+```{r}
+Y <- c(0,1,2)
+X1 <- c(0,1)
+X2 <-c(0,1,2)
+
+py <- c(0.4,0.3,0.3)
+
+pxy <- matrix(c(0.2,0.1,0.4,0.2,0.0,0.1,0.6,0.1,0.1,0.1,0.1,0.0,0.1,0.4,0.3,0.0,0.2,0.0), nrow = 3, byrow = TRUE)
+
+```
+
+
+First draw a 100 values from P(Y)
+```{r}
+n = 100
+(Ysample = sample(0:2, size=n, replace=TRUE, prob=py))
+nOfYs <- sum(Ysample==0)
+print(paste("Number of cases where Y = 0 is", nOfYs))
+```
+
+
+Next draw the feature values from the corresponding joint distribution P(X|Y):
+```{r}
+xySample <- data.frame()
+count <- 0
+for (i in 1:100)
+{
+  xySample <- rbind(xySample,expand.grid(0:1,0:2)[sample(1:6, 1, replace=TRUE, pxy[Ysample[i]+1,]),])
+  if(xySample[i,1]==0 && xySample[i,2]==0)
+  {
+    count <- count + 1
+  }
+}
+print(paste("Number of cases where X1 = 0 AND X2 = 0 is", count))
+```
+
+### b) Smoothed estimates
+
+
+```{r}
+pxy_CJX <- function(c,j,x,xsmpl,ysmpl,alpha)
+{
+  countC <- 0
+  countJX <- 0
+  for (i in 1:length(ysmpl))
+  {
+    if(ysmpl[i] == c)
+    {
+      countC <- countC + 1
+      if(xsmpl[i,j]==x)
+      {
+        countJX <- countJX + 1
+      }
+    }
+  }
+ # print(countC)
+#  print(countJX)
+  return((countJX + alpha)/(countC + countC*alpha))
+}
+
+#Smoothed probability function for different classes of Y
+pxy_C <- function(c,xsmpl,ysmpl,alpha)
+{
+  count <- length(ysmpl)
+  countC <- 0
+  for (i in 1:count)
+  {
+    if(ysmpl[i] == c)
+    {
+      countC <- countC + 1
+    }
+  }
+  return((countC + alpha)/(count + 3*alpha))
+}
+```
+
+```{r}
+#
+ProbXiGivenY <- function(class = 0, i = 1, valx = 0, alpha = 0, modelsize = 0)
+{
+  modelxy = xySample
+  return (pxy_CJX(class,i,valx,xySample,Ysample,alpha))
+}
+
+ProbC <- function (class = 0, alpha = 0)
+{
+  return (pxy_C(class,xySample, Ysample,alpha))
+}
+
+predictCNaiveB <- function(x1,x2,alpha)
+{
+  py <- rep(0,3)
+  ProbY <- ProbC(0)*ProbXiGivenY(0,1,x1,alpha)*ProbXiGivenY(0,2,x2,alpha)
+  ProbY <- ProbY + ProbC(1)*ProbXiGivenY(1,1,x1,alpha)*ProbXiGivenY(1,2,x2,alpha)
+  ProbY <- ProbY + ProbC(2)*ProbXiGivenY(2,1,x1,alpha)*ProbXiGivenY(2,2,x2,alpha)
+  
+  py[1] = ProbC(0)*ProbXiGivenY(0,1,x1,alpha)*ProbXiGivenY(0,2,x2,alpha)/ProbY
+  py[2] = ProbC(1)*ProbXiGivenY(1,1,x1,alpha)*ProbXiGivenY(1,2,x2,alpha)/ProbY
+  py[3] = ProbC(2)*ProbXiGivenY(2,1,x1,alpha)*ProbXiGivenY(2,2,x2,alpha)/ProbY
+  
+  return (which.max(py)-1)
+}
+
+```
+
+Test the predictor:
+```{r}
+predictCNaiveB(1,2,0)
+```
+
+## c)
+(2 points) Now generate a test set of 10 000 points from the same source as the training set and apply the naive Bayes classifier you learned from the training data. What is the test set error you obtain? (The test set error with Laplace smoothing should be between 0.4-0.6.)
+
+Repeat with training sets of size n = 25,50,100,200,400,800,1600,3200,6400 and plot the test set
+error as a function of the training set size. (The asymptotic error is 0.4.) Does the smoothing method have an effect on the error?
+
+Function for generating the Y of the test set
+```{r}
+testsetY <- function(n)
+{
+  Ysmp = sample(0:2, size=n, replace=TRUE, prob=py)
+  return (Ysmp)
+}
+```
+
+Function to draw the feature values from the corresponding joint distribution P(X|Y):
+
+
+```{r}
+testsetX <- function(n)
+{
+  Ysmp <- testsetY(n)
+  xySmp <- data.frame()
+  count <- 0
+#  xySmp <- expand.grid(0:1,0:2)[sample(1:6, 1, replace=TRUE, pxy[Ysmp+1,]),]
+  for (i in 1:n)
+  {
+    xySmp <- rbind(xySmp,expand.grid(0:1,0:2)[sample(1:6, 1, replace=TRUE, pxy[Ysmp[i]+1,]),])
+  }
+  xySmp$Y = Ysmp
+  colnames(xySmp) <- c("X1", "X2", "Y")
+  return (xySmp)
+}
+```
+
+testX 
+```{r}
+testX <- data.frame()
+testX <- testsetX(10000)
+```
+
+```{r}
+
+for(i in 1:10000)
+{
+  testX$predY100[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+#testX$predY = predY
+
+```
+
+test set error with modelsize 100:
+```{r}
+sum(testX$Y == testX$predY)/10000
+```
+```{r}
+#sizes <- c(25,50, 100, 200, 400, 800, 1600, 3200, 6400)
+sizes <- c(25,400,6400)
+testerror <- rep(0,length(sizes))
+modelData <- data.frame()
+modelData <- testsetX(6400)
+n <- 1
+#25
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY25[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY25)/10000
+
+
+#400
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY400[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY400)/10000
+
+
+
+#6400
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY6400[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY6400)/10000
+
+
+```
+These removed from previous chunk:
+
+#50
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY50[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY50)/10000
+
+#100
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY100[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY100)/10000
+
+#200
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY200[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY200)/10000
+
+#800
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY800[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY800)/10000
+
+#1600
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY1600[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY1600)/10000
+
+#3200
+n<- n+1
+xySample <- modelData[1:sizes[n],1:2]
+Ysample <- modelData[1:sizes[n],3]
+for(i in 1:10000)
+{
+  testX$predY3200[i] <- predictCNaiveB(testX$X1[i],testX$X2[i],1)
+}
+testerror[n] = sum(testX$Y == testX$predY3200)/10000
+
+```{r}
+#write.csv(testX,"testdata.csv")
+#write.csv(testerror,"testerror.csv")
+```
+
+```{r}
+plot(sizes,1-testerror)
+
+```
+

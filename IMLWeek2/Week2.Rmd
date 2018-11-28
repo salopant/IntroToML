@@ -1,7 +1,7 @@
 ---
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 (3 points) Recall that the p-dimensional multivariate Gaussian distribution is defined by a mean vector
 µ and a covariance matrix Σ. If X is normal distributed with parameters µ and Σ, then Σ contains the

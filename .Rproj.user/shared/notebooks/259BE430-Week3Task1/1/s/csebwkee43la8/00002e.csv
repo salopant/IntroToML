@@ -1,0 +1,7 @@
+"0","#create grid "
+"0","xgrid <- .25*(-20:20)"
+"0","ygrid <- .25*(-20:20)"
+"0","grid <- expand.grid(xgrid, ygrid)"
+"0","py = probYplus1(grid[,1],grid[,2])"
+"0","pyDraw <- matrix(py, nrow=41, ncol=41)"
+"0","contour(xgrid, ygrid, pyDraw, xlab=""x1"", ylab=""x2"")"

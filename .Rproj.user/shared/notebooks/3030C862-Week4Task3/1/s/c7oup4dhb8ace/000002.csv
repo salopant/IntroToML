@@ -1,0 +1,6 @@
+"0","trainPurch <- fitted(svmModel, train)"
+"0","sum(trainPurch == train$Purchase)/nrow(train)"
+"1","[1]"
+"1"," 0.8247664"
+"1","
+"

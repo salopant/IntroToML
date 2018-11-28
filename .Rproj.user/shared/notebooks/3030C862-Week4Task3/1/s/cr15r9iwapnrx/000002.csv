@@ -1,0 +1,6 @@
+"0","trainPurch <- fitted(bestmodPurc, train)"
+"0","1- sum(trainPurch == train$Purchase)/nrow(train)"
+"1","[1]"
+"1"," 0.1530374"
+"1","
+"

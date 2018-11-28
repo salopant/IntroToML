@@ -1,0 +1,4 @@
+"0","dat=data.frame(x=x, y=as.factor(y))"
+"0","library (e1071)"
+"0","svmfit =svm(y~., data=dat , kernel =""linear"", cost =10, scale =FALSE )"
+"0","plot(svmfit , dat)"

@@ -1,0 +1,133 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+
+#### Problem 1 
+![Manually created split](../DecisionTreeTask3.png)
+#### (a) 
+```{r}
+green <- c(29,25,10,14,9,5,31)
+white <- c(0,1,0,17,1,4,14)
+Dtotal <- sum(green) + sum(white)
+S1_1 <- c(1) 
+S1_2 <- c(2,3,4,5,6,7)
+S2_1 <- c(3,7) 
+S2_2 <- c(2,4,5,6)
+S3_1 <- c(3) 
+S3_2 <- c(7)
+S4_1 <- c(2) 
+S4_2 <- c(4,5,6)
+S5_1 <- c(4) 
+S5_2 <- c(5,6)
+S6_1 <- c(5) 
+S6_2 <- c(6)
+
+sOnes <- list(S1_1,S2_1,S3_1,S4_1,S5_1,S6_1)
+sTwos <- list(S1_2,S2_2,S3_2,S4_2,S5_2,S6_2)
+
+
+```
+
+```{r}
+Entropy <- function(green,white,splits)
+{
+  gSum <- sum(green[splits])
+  wSum <- sum(white[splits])
+  total <- gSum + wSum
+  ent <- - gSum/total*log(gSum/total)
+  ent <- ent - wSum/total*log(wSum/total)
+}
+Gini <- function(green,white,splits)
+{
+  gSum <- sum(green[splits])
+  wSum <- sum(white[splits])
+  total <- gSum + wSum
+  gini <- gSum/total*(1-gSum/total)
+  gini <- gini + wSum/total*(1 - wSum/total)
+}
+ClassErr <- function(green,white,splits)
+{
+  gSum <- sum(green[splits])
+  wSum <- sum(white[splits])
+  max <- gSum
+  max <- max(gSum,wSum)
+  return (1-max/(gSum + wSum))
+}
+Impurity <- function (green,white,split1, split2, imp1, imp2, total)
+{
+  Sum1 <- sum(green[split1]) + sum(white[split1])
+  Sum2 <- sum(green[split2]) + sum(white[split2])
+  return(Sum1 * imp1 / total + Sum2 * imp2 / total)
+}
+Gain <- function(impTotal, impSplit)
+{
+  return (impTotal - impSplit)
+}
+
+
+```
+
+
+```{r}
+
+DImpClassE <- ClassErr(green,white,c(1,2,3,4,5,6,7))
+DImpEnt <- Entropy(green,white,c(1,2,3,4,5,6,7))
+DImpGini <- Gini(green,white,c(1,2,3,4,5,6,7))
+
+n <- length(sOnes)
+ImpCError <- rep(0,n)
+ImpEntropy <- rep(0,n)
+ImpGini <- rep(0,n)
+GainCError <- rep(0,n)
+GainEntropy <- rep(0,n)
+GainGini <- rep(0,n)
+
+for (i in 1:n)
+{
+  ImpCError[i] <- Impurity(green,white,sOnes[[i]],sTwos[[i]],ClassErr(green,white,sOnes[[i]]),ClassErr(green,white,sTwos[[i]]),Dtotal)
+  ImpEntropy[i] <- Impurity(green,white,sOnes[[i]],sTwos[[i]],Entropy(green,white,sOnes[[i]]),Entropy(green,white,sTwos[[i]]),Dtotal)
+  ImpGini[i] <- Impurity(green,white,sOnes[[i]],sTwos[[i]],Gini(green,white,sOnes[[i]]),Gini(green,white,sTwos[[i]]),Dtotal)
+  GainCError[i] <- Gain(DImpClassE, ImpCError[i])
+  GainEntropy[i] <- Gain(DImpEnt, ImpEntropy[i])
+  GainGini[i] <- Gain(DImpGini, ImpGini[i])
+}
+
+```
+
+```{r}
+i <- 5
+Impurity(green,white,sOnes[[i]],sTwos[[i]],Gini(green,white,sOnes[[i]]),Gini(green,white,sTwos[[i]]),Dtotal)
+Gain(ImpGini[i],DImpGini)
+```
+
+
+
+```{r}
+plot(0,0,xlim = c(0,7),ylim = c(0,1.0),type = "n", xlab=("Split #"), ylab="Impurity")
+
+cl <- rainbow(3)
+
+lines(1:6,ImpCError,col = cl[1],type = 'b')
+lines(1:6,ImpEntropy,col = cl[2],type = 'b')
+lines(1:6,ImpGini,col = cl[3],type = 'b')
+legend(5,0.6,legend = c("Classification error", "Entropy", "Gini"), col = cl[1:3],lty=1:2, cex=0.8)
+
+```
+```{r}
+plot(0,0,xlim = c(0,7),ylim = c(-0.1,0.60),type = "n", xlab=("Split #"), ylab="Gain")
+
+cl <- rainbow(3)
+
+lines(1:6,GainCError,col = cl[1],type = 'b')
+lines(1:6,GainEntropy,col = cl[2],type = 'b')
+lines(1:6,GainGini,col = cl[3],type = 'b')
+legend(1,0.2,legend = c("Classification error", "Entropy", "Gini"), col = cl[1:3],lty=1:2, cex=0.8)
+
+
+```
+
+### Task b
+
+![Manually created split](../solution4_1b.jpg)
