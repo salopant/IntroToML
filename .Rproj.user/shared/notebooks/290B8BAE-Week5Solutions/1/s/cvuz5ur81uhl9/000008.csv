@@ -1,0 +1,7 @@
+"0","train <<- aload_image_file('./train-images.idx3-ubyte')"
+"0","test <<- aload_image_file('./t10k-images.idx3-ubyte')"
+"0","ytrain <<- aload_label_file('./train-labels.idx1-ubyte')"
+"0","ytest <<- aload_label_file('./t10k-labels.idx1-ubyte')  "
+"0","train$y = ytrain"
+"0","test$y = ytest"
+"0","  "

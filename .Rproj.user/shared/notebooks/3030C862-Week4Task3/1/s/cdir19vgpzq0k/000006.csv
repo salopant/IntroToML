@@ -1,8 +1,0 @@
-"0","library(ISLR)"
-"0","data (OJ)"
-"0","smp_siz = floor(0.8*nrow(OJ))"
-"0","set.seed(23)   # set seed to ensure you always have same random numbers generated"
-"0","train_ind = sample(seq_len(nrow(OJ)),size = smp_siz)  # Randomly identifies therows equal to sample size ( defined in previous instruction) from  all the rows of Smarket dataset and stores the row number in train_ind"
-"0","train =OJ[train_ind,] #creates the training dataset with row numbers stored in train_ind"
-"0","test=OJ[-train_ind,]"
-"0","head(train)"

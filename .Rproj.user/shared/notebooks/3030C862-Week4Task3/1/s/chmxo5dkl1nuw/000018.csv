@@ -1,2 +1,0 @@
-"0","#plot(x, col =(y+5) /2, pch =19)"
-"0","plot(smp$x.1,smp$x.2,col = (sampley + 5)/2, pch = 19)"

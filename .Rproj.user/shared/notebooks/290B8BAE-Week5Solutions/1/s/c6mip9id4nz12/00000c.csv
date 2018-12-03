@@ -1,0 +1,4 @@
+"0","newtrain = list()"
+"0","newtrain$n <- 500"
+"0","newtrain$x <- train$x[1:500,]"
+"0","newtrain$y <- train$y[1:500]"

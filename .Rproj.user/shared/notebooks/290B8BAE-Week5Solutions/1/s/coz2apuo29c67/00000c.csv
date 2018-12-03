@@ -1,0 +1,1 @@
+"0","train <<- aload_image_file('./train-images.idx3-ubyte')"

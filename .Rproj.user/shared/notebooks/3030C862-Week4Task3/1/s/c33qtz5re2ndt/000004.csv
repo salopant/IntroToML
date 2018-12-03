@@ -1,8 +1,0 @@
-"0","library(MASS)"
-"0","corr = c(1, 0, 0, 16)"
-"0","sigma <- matrix(corr,nrow=2, ncol=2)"
-"0","sample <- mvrnorm(200,c(0,0), Sigma = sigma)"
-"0","sampley <- runif(200, min = 0, max = 1)"
-"0","sampley <- probYplus1(sample[,1],sample[,2])>=sampley"
-"0","smp <- data.frame(x = sample, y = as.factor(sampley))"
-"0","head(smp)"

@@ -1,8 +1,0 @@
-"0","#for some mysterious reason the predict just won't return value, only null"
-"0","#but the predicted y can be seen in html output -->"
-"0","(ypred = predict(bestmod,testdat))"
-"1","NULL
-"
-"0","(ypred2 = predict(svmfit,testdat))"
-"1","NULL
-"

@@ -1,4 +1,0 @@
-"0","#dat=data.frame(x=x,y=as.factor (y))"
-"0","#svmfit =svm(y~., data=dat , kernel =""linear"", cost =1e5)"
-"0","#summary (svmfit)"
-"0","#plot(svmfit , dat)"

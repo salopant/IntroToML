@@ -1,2 +1,0 @@
-"0","cl <- rainbow(3)"
-"0","lines(1:6,ImpCError,col = cl[1],type = 'b')"

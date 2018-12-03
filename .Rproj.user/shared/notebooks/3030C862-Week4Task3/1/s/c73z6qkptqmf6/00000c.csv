@@ -1,2 +1,0 @@
-"0","svmfit =svm(y~., data=dat , kernel =""linear"", cost =0.1, scale =FALSE )"
-"0","plot(svmfit , dat)"

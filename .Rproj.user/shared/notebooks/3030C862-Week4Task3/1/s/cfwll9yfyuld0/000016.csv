@@ -1,6 +1,0 @@
-"0","library(e1071)"
-"0","set.seed (1)"
-"0","x=matrix (rnorm (20*2) , ncol =2)"
-"0","y=c(rep (-1,10) , rep (1 ,10) )"
-"0","x[y==1 ,] = x[y==1,] + 1"
-"0","plot(x, col =(3-y))"

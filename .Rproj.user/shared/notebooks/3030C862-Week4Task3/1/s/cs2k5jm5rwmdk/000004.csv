@@ -1,7 +1,0 @@
-"0","svmfit10 =svm(y~., data=dat , kernel =""linear"", cost = 10, scale =FALSE )"
-"0","(ypred10 = predict(svmfit,testdat))"
-"1","NULL
-"
-"0","#table(predict =ypred , truth= testdat$y )"
-"0","#table(predict =ypred2 , truth= testdat$y )"
-"0","#table(predict =ypred10 , truth= testdat$y )"

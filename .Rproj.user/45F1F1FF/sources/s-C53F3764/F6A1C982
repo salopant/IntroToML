@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1543839153592.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1195345454",
+    "id" : "F6A1C982",
+    "lastKnownWriteTime" : 1543858103,
+    "last_content_update" : 1543858103035,
+    "path" : "C:/Users/antti/asalo/Opinnot/Intro to Machine Learning/IntroToML/IMLWeek5/Week5Solutions.Rmd",
+    "project_path" : "IMLWeek5/Week5Solutions.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "464,20",
+        "scrollLine" : "464",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
